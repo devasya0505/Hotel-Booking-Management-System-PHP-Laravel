@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+    <h1>Welcome to Laravel!</h1>
+@endsection
+
+@section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
