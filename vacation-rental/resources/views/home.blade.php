@@ -34,7 +34,6 @@
     </div>
 </div>
 
-
 <section class="ftco-section ftco-services">
     <div class="container">
         <div class="row">
@@ -164,7 +163,6 @@
     </div>
 </section>
 
-
 <section class="ftco-section bg-light">
     <div class="container">
         <div class="row no-gutters">
@@ -274,6 +272,5 @@
         </div>
     </div>
 </section>
-
 
 @endsection
