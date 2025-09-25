@@ -5,7 +5,7 @@ use App\Http\Controllers\Hotels\HotelsController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})-> name('home');
 
 // If using Laravel 8 or above, make sure to install laravel/ui and run auth scaffolding:
 // composer require laravel/ui
@@ -26,3 +26,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('hotels/rooms/{id}', [App\Http\Controllers\Hotels\HotelsController::class, 'rooms'])->name('hotel.rooms');
 
 Route::get('hotels/rooms-details/{id}', [App\Http\Controllers\Hotels\HotelsController::class, 'roomsDetails'])->name('hotel.rooms.details');
+
