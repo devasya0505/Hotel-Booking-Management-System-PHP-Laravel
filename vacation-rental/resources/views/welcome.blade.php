@@ -26,12 +26,12 @@
             <nav class="flex items-center justify-end gap-4">
         @auth
             <!-- Change this from /dashboard to / -->
-            {{-- <a
+            <a
                 href="{{ url('/welcome') }}"
                 class="inline-block px-5 py-1.5 border text-sm rounded-sm"
             >
                 Dashboard
-            </a> --}}
+            </a>
 
              <!-- Or create a simple test link -->
             <a
