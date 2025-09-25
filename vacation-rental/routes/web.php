@@ -7,7 +7,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+// If using Laravel 8 or above, make sure to install laravel/ui and run auth scaffolding:
+// composer require laravel/ui
+// php artisan ui vue --auth
+// Or define authentication routes manually as needed.
+
+// Auth::routes(); // Uncomment if using laravel/ui package
+
+use Illuminate\Support\Facades\Auth;
+
+if (class_exists(\Illuminate\Support\Facades\Auth::class) && method_exists(Auth::class, 'routes')) {
+    Auth::routes();
+}
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
