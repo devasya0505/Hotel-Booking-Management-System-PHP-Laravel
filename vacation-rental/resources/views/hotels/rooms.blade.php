@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <section class="hero-wrap hero-wrap-2"
         style="margin-top: -25px; background-image: url(' {{ asset('assets/images/image_2.jpg') }} ');">
         <div class="overlay"></div>
@@ -24,7 +23,7 @@
                     <div class="col-lg-6">
                         <div class="room-wrap d-md-flex">
                             <a href="#" class="img"
-                                style="background-image: url( {{ asset('assets/images/' . $room->image. '') }});"></a>
+                                style="background-image: url( {{ asset('assets/images/' . $room->image . '') }});"></a>
                             <div class="half left-arrow d-flex align-items-center">
                                 <div class="text p-4 p-xl-5 text-center">
                                     <p class="star mb-0"><span class="fa fa-star"></span><span
