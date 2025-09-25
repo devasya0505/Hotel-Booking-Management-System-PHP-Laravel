@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Hotels;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment\Apartment;
+use App\Models\Booking\Booking;
 
 class HotelsController extends Controller
 {
@@ -25,7 +26,7 @@ class HotelsController extends Controller
     public function roomsBooking(Request $request, $id){
         if(date("Y/m/d") < $request->check_in && date("Y/m/d") < $request->check_out){
             if($request->check_in < $request->check_out){
-
+                
             }
             else{
                 echo "Invalid Dates";
