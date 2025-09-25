@@ -337,6 +337,7 @@
 
                     <form method="POST" action="{{ route('logout') }}" class="inline-block">
                         @csrf
+                        <a href="{{ route('home') }}" class="nav-button">Home</a>
                         <button type="submit" class="nav-button">Logout</button>
                     </form>
                 @else
