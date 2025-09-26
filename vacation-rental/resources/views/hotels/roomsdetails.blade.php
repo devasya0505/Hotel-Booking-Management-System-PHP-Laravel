@@ -20,9 +20,12 @@
         <div class="container">
             <div class="row justify-content-end">
                 <div class="col-lg-4">
-                    <form action="#" class="appointment-form" style="margin-top: -568px;">
+                    <form action="{{ route('hotel.rooms.booking', $getRoom->id) }}" method="post" class="appointment-form"
+                        style="margin-top: -568px;">
+                        @csrf
                         <h3 class="mb-3">Book this room</h3>
                         <div class="row">
+                            <!-- Email -->
                             <div class="col-md-12">
                                 <div class="form-floating mb-3">
                                     <input id="email" type="email"
@@ -37,6 +40,7 @@
                                 </div>
                             </div>
 
+                            <!-- Full Name -->
                             <div class="col-md-12">
                                 <div class="form-floating mb-3">
                                     <input id="name" type="text"
@@ -51,13 +55,14 @@
                                 </div>
                             </div>
 
+                            <!-- Phone Number -->
                             <div class="col-md-12">
                                 <div class="form-floating mb-3">
-                                    <input id="number" type="text"
-                                        class="form-control @error('number') is-invalid @enderror" name="number"
-                                        value="{{ old('number') }}" required autocomplete="tel" placeholder="">
-                                    <label for="number">Phone Number</label>
-                                    @error('number')
+                                    <input id="phone_number" type="text"
+                                        class="form-control @error('phone_number') is-invalid @enderror" name="phone_number"
+                                        value="{{ old('phone_number') }}" required autocomplete="tel" placeholder="">
+                                    <label for="phone_number">Phone Number</label>
+                                    @error('phone_number')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -66,44 +71,45 @@
                             </div>
 
                             <!-- Check-in and Check-out side by side -->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
                                         <div class="form-group">
                                             <div class="input-wrap">
                                                 <div class="icon"><span class="ion-md-calendar"></span></div>
                                                 <input id="check-in" type="text"
                                                     class="form-control appointment_date-check-in @error('check_in') is-invalid @enderror"
                                                     name="check_in" value="{{ old('check_in') }}" required
-                                                    placeholder="Check-In">
+                                                    placeholder="Check-In" data-date-format="dd/mm/yyyy">
                                             </div>
+                                            @error('check_in')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
-                                        @error('check_in')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
                                     </div>
-                                </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <div class="icon"><span class="ion-md-calendar"></span></div>
-                                            <input id="check-out" type="text"
-                                                class="form-control appointment_date-check-out @error('check_out') is-invalid @enderror"
-                                                name="check_out" value="{{ old('check_out') }}" required
-                                                placeholder="Check-Out">
+                                            <div class="input-wrap">
+                                                <div class="icon"><span class="ion-md-calendar"></span></div>
+                                                <input id="check-out" type="text"
+                                                    class="form-control appointment_date-check-out @error('check_out') is-invalid @enderror"
+                                                    name="check_out" value="{{ old('check_out') }}" required
+                                                    placeholder="Check-Out" date-date-format="dd/mm/yyyy">
+                                            </div>
+                                            @error('check_out')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
-                                        @error('check_out')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- Submit Button -->
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="submit" value="Book and Pay Now" class="btn btn-primary py-3 px-4">
@@ -232,4 +238,25 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('.appointment_date-check-in, .appointment_date-check-out').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        startDate: new Date()
+    });
+    
+    // Optional: Set check-out min date based on check-in selection
+    $('.appointment_date-check-in').datepicker().on('changeDate', function(e) {
+        $('.appointment_date-check-out').datepicker('setStartDate', e.date);
+    });
+});
+</script>
 @endsection
