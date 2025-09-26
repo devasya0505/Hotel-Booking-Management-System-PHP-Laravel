@@ -8,7 +8,7 @@
             <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start"
                 data-scrollax-parent="true">
                 <div class="col-md-7 ftco-animate">
-                    <h2 class="subheading">Booked Successfully</h2>
+                    <h1 class="mb-4">Booked Successfully</h1>
                     <h1 class="mb-4"></h1>
                     <p><a href="{{ route('home') }}" class="btn btn-primary">Go Home</a> </p>
                 </div>

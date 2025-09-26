@@ -83,8 +83,12 @@ class HotelsController extends Controller
         }
     }
 
-    public function success()
-    {
-        return view('hotels.success'); // You'll need to create this view
+    public function payWithPayPal(){
+        return view('hotels.pay');
     }
+
+    public function success(){
+        return view('hotels.success');
+    }
+
 }
