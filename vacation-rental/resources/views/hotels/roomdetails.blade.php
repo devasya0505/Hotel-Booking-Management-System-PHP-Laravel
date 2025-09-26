@@ -239,24 +239,3 @@
         </div>
     </section>
 @endsection
-
-@section('scripts')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
-<script>
-$(document).ready(function() {
-    $('.appointment_date-check-in, .appointment_date-check-out').datepicker({
-        format: 'dd/mm/yyyy',
-        autoclose: true,
-        todayHighlight: true,
-        startDate: new Date()
-    });
-    
-    // Optional: Set check-out min date based on check-in selection
-    $('.appointment_date-check-in').datepicker().on('changeDate', function(e) {
-        $('.appointment_date-check-out').datepicker('setStartDate', e.date);
-    });
-});
-</script>
-@endsection

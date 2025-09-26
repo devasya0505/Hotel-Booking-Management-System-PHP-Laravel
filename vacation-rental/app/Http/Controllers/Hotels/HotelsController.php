@@ -32,17 +32,15 @@ class HotelsController extends Controller
         if (!$getRoom) {
             abort(404, 'Room not found');
         }
-        
+
         return view('hotels.roomdetails', compact('getRoom'));
     }
 
-    public function roomBooking(Request $request, $id)
+    public function roomsBooking(Request $request, $id)
     {
 
         $room = Apartment::find($id);
         $hotel = Hotel::find($id);
-
-
 
         if (strval(date("n/j/Y")) < strval($request->check_in) and strval(date("n/j/Y")) < strval($request->check_out)) {
 
@@ -66,7 +64,7 @@ class HotelsController extends Controller
                     "check_out" => $request->check_out,
                     "days" => $days,
                     "price" => $days * $room->price,
-                    "user_id" => Auth::user()->id,
+                    "user_id" =>    Auth::user()->id,
                     "room_name" => $room->name,
                     "hotel_name" => $hotel->name,
                 ]);
@@ -83,5 +81,10 @@ class HotelsController extends Controller
         } else {
             echo "choose dates in the future, invalid check in or check out dates";
         }
+    }
+
+    public function success()
+    {
+        return view('hotels.success'); // You'll need to create this view
     }
 }
