@@ -84,6 +84,6 @@ class HotelsController extends Controller
     }
 
     public function payWithPayPal(){
-        return view('hotel.pay');
+        return view('hotels.pay');
     }
 }
