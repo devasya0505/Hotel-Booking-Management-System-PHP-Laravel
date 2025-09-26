@@ -76,10 +76,10 @@ class HotelsController extends Controller
 
                 return Redirect::route('hotel.pay');
             } else {
-                echo "check out date should be greater than check in date"
+                echo "check out date should be greater than check in date";
             }
         } else {
-            echo "choose dates in the future, invalid check in or check out dates"
+            echo "choose dates in the future, invalid check in or check out dates";
         }
     }
 }
