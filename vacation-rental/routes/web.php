@@ -31,3 +31,5 @@ Route::post('hotels/rooms-booking/{id}', [App\Http\Controllers\Hotels\HotelsCont
 
 //pay
 Route::post('hotels/pay', [App\Http\Controllers\Hotels\HotelsController::class, 'payWithPayPal'])->name('hotel.pay');
+
+Route::post('hotels/success', [App\Http\Controllers\Hotels\HotelsController::class, 'success'])->name('hotel.pay');

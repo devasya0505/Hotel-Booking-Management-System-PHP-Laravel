@@ -10,6 +10,7 @@ use App\Models\Hotel\Hotel;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class HotelsController extends Controller
 {
@@ -69,21 +70,25 @@ class HotelsController extends Controller
 
             return Redirect::route('');
             // echo "Booked Successfully";
-            echo $currentDate . "<br>";
-            echo $checkIn . "<br>";
-            echo $checkOut . "<br>";
+            // echo $currentDate . "<br>";
+            // echo $checkIn . "<br>";
+            // echo $checkOut . "<br>";
             } else {
             echo "Invalid Dates: Check-In date is GREATER THAN Check-Out date";
             }
         } else {
             echo "DO NOT choose past dates" . "<br>";
-            echo $currentDate . "<br>";
-            echo $checkIn . "<br>";
-            echo $checkOut . "<br>";
+            // echo $currentDate . "<br>";
+            // echo $checkIn . "<br>";
+            // echo $checkOut . "<br>";
         }
     }
 
     public function payWithPayPal(){
         return view('hotels.pay');
+    }
+
+    public function success(){
+        return view('hotels.success');
     }
 }
