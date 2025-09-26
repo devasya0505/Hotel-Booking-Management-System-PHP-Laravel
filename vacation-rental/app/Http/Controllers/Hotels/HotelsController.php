@@ -85,72 +85,74 @@ class HotelsController extends Controller
     //     }
     // }
 
-    
+
     public function roomsBooking(Request $request, $id)
-{
-    $room = Apartment::find($id);
-    $hotel = Hotel::find($id);
+    {
+        $room = Apartment::find($id);
+        $hotel = Hotel::find($id);
 
-    try {
-        // CORRECT FORMAT: MM/DD/YYYY (not DD/MM/YYYY)
-        $checkIn = DateTime::createFromFormat('m/d/Y', $request->check_in);
-        $checkOut = DateTime::createFromFormat('m/d/Y', $request->check_out);
-        
-        if (!$checkIn || !$checkOut) {
-            return redirect()->back()->with('error', 'Invalid date format. Please use MM/DD/YYYY format.');
+        try {
+            // CORRECT FORMAT: MM/DD/YYYY (not DD/MM/YYYY)
+            $checkIn = DateTime::createFromFormat('m/d/Y', $request->check_in);
+            $checkOut = DateTime::createFromFormat('m/d/Y', $request->check_out);
+
+            if (!$checkIn || !$checkOut) {
+                return redirect()->back()->with('error', 'Invalid date format. Please use MM/DD/YYYY format.');
+            }
+
+            $currentDate = new DateTime();
+            $currentDate->setTime(0, 0, 0);
+            $checkIn->setTime(0, 0, 0);
+            $checkOut->setTime(0, 0, 0);
+
+            // Debug: Uncomment to see dates
+            // return redirect()->back()->with('error', 
+            //     "Current: " . $currentDate->format('m/d/Y') . 
+            //     " | Check-in: " . $checkIn->format('m/d/Y') . 
+            //     " | Check-out: " . $checkOut->format('m/d/Y'));
+
+            if ($checkIn < $currentDate) {
+                return redirect()->back()->with('error', 'Check-in date cannot be in the past. Please choose future dates.');
+            }
+
+            if ($checkOut <= $checkIn) {
+                return redirect()->back()->with('error', 'Check-out date must be after check-in date.');
+            }
+
+            $interval = $checkIn->diff($checkOut);
+            $days = $interval->days;
+            $totalPrice = $room->price * $days;
+
+            Booking::create([
+                "name" => $request->name,
+                "email" => $request->email,
+                "phone_number" => $request->phone_number,
+                "check_in" => $checkIn->format('Y-m-d'),
+                "check_out" => $checkOut->format('Y-m-d'),
+                "days" => $days,
+                "price" => $totalPrice,
+                "user_id" => Auth::user()->id,
+                "room_name" => $room->name,
+                "hotel_name" => $hotel->name,
+            ]);
+
+            // Store price in session (make sure this line exists)
+            Session::put('price', number_format($totalPrice, 2));
+
+            return redirect()->route('hotel.pay')->with('success', 'Room booked successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
-
-        $currentDate = new DateTime();
-        $currentDate->setTime(0, 0, 0);
-        $checkIn->setTime(0, 0, 0);
-        $checkOut->setTime(0, 0, 0);
-
-        // Debug: Uncomment to see dates
-        // return redirect()->back()->with('error', 
-        //     "Current: " . $currentDate->format('m/d/Y') . 
-        //     " | Check-in: " . $checkIn->format('m/d/Y') . 
-        //     " | Check-out: " . $checkOut->format('m/d/Y'));
-
-        if ($checkIn < $currentDate) {
-            return redirect()->back()->with('error', 'Check-in date cannot be in the past. Please choose future dates.');
-        }
-
-        if ($checkOut <= $checkIn) {
-            return redirect()->back()->with('error', 'Check-out date must be after check-in date.');
-        }
-
-        $interval = $checkIn->diff($checkOut);
-        $days = $interval->days;
-        $totalPrice = $room->price * $days;
-
-        Booking::create([
-            "name" => $request->name,
-            "email" => $request->email,
-            "phone_number" => $request->phone_number,
-            "check_in" => $checkIn->format('Y-m-d'),
-            "check_out" => $checkOut->format('Y-m-d'),
-            "days" => $days,
-            "price" => $totalPrice,
-            "user_id" => Auth::user()->id,
-            "room_name" => $room->name,
-            "hotel_name" => $hotel->name,
-        ]);
-
-        return redirect()->route('hotel.pay')->with('success', 'Room booked successfully!');
-
-    } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
     }
-}
-    
-    public function payWithPayPal(){
+
+    public function payWithPayPal()
+    {
         return view('hotels.pay');
     }
 
-    public function success(){
-
+    public function success()
+    {
         Session::forget('price');
         return view('hotels.success');
     }
-
 }
