@@ -25,13 +25,15 @@ class HotelsController extends Controller
     }
 
 
-    public function roomDetails($id)
+    public function roomsDetails($id)
     {
-
         $getRoom = Apartment::find($id);
 
-
-        return view('hotels.room.details', compact('getRoom'));
+        if (!$getRoom) {
+            abort(404, 'Room not found');
+        }
+        
+        return view('hotels.roomdetails', compact('getRoom'));
     }
 
     public function roomBooking(Request $request, $id)

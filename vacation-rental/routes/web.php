@@ -7,6 +7,11 @@ Route::get('/', function () {
     return view('welcome');
 })-> name('home');
 
+// Test route - remove this later
+Route::get('/test', function() {
+    return 'Laravel is working!';
+});
+
 // If using Laravel 8 or above, make sure to install laravel/ui and run auth scaffolding:
 // composer require laravel/ui
 // php artisan ui vue --auth
