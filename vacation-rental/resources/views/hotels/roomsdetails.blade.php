@@ -80,7 +80,7 @@
                                                 <input id="check-in" type="text"
                                                     class="form-control appointment_date-check-in @error('check_in') is-invalid @enderror"
                                                     name="check_in" value="{{ old('check_in') }}" required
-                                                    placeholder="Check-In" data-date-format="dd/mm/yyyy">
+                                                    placeholder="Check-In" date-date-format="dd/mm/yyyy" autocomplete="off">
                                             </div>
                                             @error('check_in')
                                                 <span class="invalid-feedback" role="alert">
@@ -97,7 +97,7 @@
                                                 <input id="check-out" type="text"
                                                     class="form-control appointment_date-check-out @error('check_out') is-invalid @enderror"
                                                     name="check_out" value="{{ old('check_out') }}" required
-                                                    placeholder="Check-Out" date-date-format="dd/mm/yyyy">
+                                                    placeholder="Check-Out" date-date-format="dd/mm/yyyy" autocomplete="off">
                                             </div>
                                             @error('check_out')
                                                 <span class="invalid-feedback" role="alert">
