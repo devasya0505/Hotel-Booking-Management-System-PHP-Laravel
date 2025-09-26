@@ -16,6 +16,22 @@
         </div>
     </div>
 
+    <div class="container">
+        @if (session()->has('error'))
+            <div class="alert alert-success">
+                {{ session()->get('error') }}
+            </div>
+        @endif
+    </div>
+
+    <div class="container">
+        @if (session()->has('error_dates'))
+            <div class="alert alert-success">
+                {{ session()->get('error_dates') }}
+            </div>
+        @endif
+    </div>
+
     <section class="ftco-section ftco-book ftco-no-pt ftco-no-pb">
         <div class="container">
             <div class="row justify-content-end">
@@ -77,10 +93,11 @@
                                         <div class="form-group">
                                             <div class="input-wrap">
                                                 <div class="icon"><span class="ion-md-calendar"></span></div>
+                                                <label for="check-in">Check In</label>
                                                 <input id="check-in" type="text"
                                                     class="form-control appointment_date-check-in @error('check_in') is-invalid @enderror"
-                                                    name="check_in" value="{{ old('check_in') }}" required
-                                                    placeholder="Check-In" date-date-format="dd/mm/yyyy" autocomplete="off">
+                                                    name="check_in" value="{{ old('check_in') }}" required placeholder=""
+                                                    autocomplete="off">
                                             </div>
                                             @error('check_in')
                                                 <span class="invalid-feedback" role="alert">
@@ -94,10 +111,11 @@
                                         <div class="form-group">
                                             <div class="input-wrap">
                                                 <div class="icon"><span class="ion-md-calendar"></span></div>
+                                                <label for="check-in">Check Out</label>
                                                 <input id="check-out" type="text"
                                                     class="form-control appointment_date-check-out @error('check_out') is-invalid @enderror"
-                                                    name="check_out" value="{{ old('check_out') }}" required
-                                                    placeholder="Check-Out" date-date-format="dd/mm/yyyy" autocomplete="off">
+                                                    name="check_out" value="{{ old('check_out') }}" required placeholder=""
+                                                    autocomplete="off">
                                             </div>
                                             @error('check_out')
                                                 <span class="invalid-feedback" role="alert">
@@ -126,7 +144,8 @@
         <div class="container">
             <div class="row no-gutters">
                 <div class="col-md-6 wrap-about">
-                    <div class="img img-2 mb-4" style="background-image: url( {{ asset('assets/images/image_2.jpg') }} );">
+                    <div class="img img-2 mb-4"
+                        style="background-image: url( {{ asset('assets/images/image_2.jpg') }} );">
                     </div>
                     <h2>The most recommended vacation rental</h2>
                     <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a

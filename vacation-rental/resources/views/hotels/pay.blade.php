@@ -29,7 +29,7 @@
                     return actions.order.create({
                         purchase_units: [{
                             amount: {
-                                value: '100' // Can also reference a variable or function
+                                value: '{{ Session::get('price') }}' // Can also reference a variable or function
                             }
                         }]
                     });
