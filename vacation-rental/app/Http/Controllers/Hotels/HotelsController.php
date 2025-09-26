@@ -9,6 +9,7 @@ use App\Models\Booking\Booking;
 use App\Models\Hotel\Hotel;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class HotelsController extends Controller
 {
@@ -60,7 +61,14 @@ class HotelsController extends Controller
                 "room_name" => $room->name,
                 "hotel_name" => $hotel->name,
             ]);
-            echo "Booked Successfully";
+
+            $totalPrice = $days * $room->price;
+            $price = Session::put('price', $totalPrice);
+
+            $getPrice = Session::get($price);
+
+            return Redirect::route('');
+            // echo "Booked Successfully";
             echo $currentDate . "<br>";
             echo $checkIn . "<br>";
             echo $checkOut . "<br>";
@@ -73,5 +81,9 @@ class HotelsController extends Controller
             echo $checkIn . "<br>";
             echo $checkOut . "<br>";
         }
+    }
+
+    public function payWithPayPal(){
+        return view('hotel.pay');
     }
 }

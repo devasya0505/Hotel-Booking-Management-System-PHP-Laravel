@@ -28,3 +28,6 @@ Route::get('hotels/rooms/{id}', [App\Http\Controllers\Hotels\HotelsController::c
 Route::get('hotels/rooms-details/{id}', [App\Http\Controllers\Hotels\HotelsController::class, 'roomsDetails'])->name('hotel.rooms.details');
 
 Route::post('hotels/rooms-booking/{id}', [App\Http\Controllers\Hotels\HotelsController::class, 'roomsBooking'])->name('hotel.rooms.booking');
+
+//pay
+Route::post('hotels/pay', [App\Http\Controllers\Hotels\HotelsController::class, 'payWithPayPal'])->name('hotel.pay');
