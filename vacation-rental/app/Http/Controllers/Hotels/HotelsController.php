@@ -156,20 +156,35 @@ class HotelsController extends Controller
 
     public function success()
     {
-        // Check if user can access this page
+        // // Check if user can access this page
+        // if (!session()->has('price')) {
+        //     return redirect()->route('home')->with('error', 'Please complete the booking process first.');
+        // }
+
+        // // Session::forget('price');
+        // // return view('hotels.success');
+
+        // // Get price before clearing session
+        // $price = session('price');
+
+        // // Clear session after payment success
+        // session()->forget('price');
+
+        // return view('hotels.success', compact('price'));
+
+
         if (!session()->has('price')) {
-            return redirect()->route('home')->with('error', 'Please complete the booking process first.');
-        }
-
-        // Session::forget('price');
-        // return view('hotels.success');
-
-        // Get price before clearing session
-        $price = session('price');
-
-        // Clear session after payment success
-        session()->forget('price');
-
-        return view('hotels.success', compact('price'));
+        return redirect()->route('home')->with('error', 'Please complete the booking process first.');
+    }
+    
+    $price = session('price');
+    $bookingData = session('booking_data'); // If you have booking data
+    
+    // Complete logout process
+    Auth::logout();
+    session()->flush(); // Clear all session data
+    session()->regenerate(); // Generate new session ID
+    
+    return view('hotels.success', compact('price', 'bookingData'));
     }
 }

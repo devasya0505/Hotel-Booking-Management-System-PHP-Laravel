@@ -16,3 +16,20 @@
         </div>
     </div>
 @endsection
+
+{{-- @extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <div class="alert alert-success">
+            <h4>Payment Successful! 🎉</h4>
+            <p>Thank you for your booking. You have been logged out for security.</p>
+            <p><strong>Amount Paid: ${{ $price }}</strong></p>
+        </div>
+
+        <div class="text-center">
+            <a href="{{ route('login') }}" class="btn btn-primary">Login Again</a>
+            <a href="{{ route('home') }}" class="btn btn-secondary">Return to Home</a>
+        </div>
+    </div>
+@endsection --}}
