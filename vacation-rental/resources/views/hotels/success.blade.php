@@ -9,6 +9,7 @@
                 data-scrollax-parent="true">
                 <div class="col-md-7 ftco-animate">
                     <h1 class="mb-4">Booked Successfully</h1>
+                    <p><strong>Amount Paid: ${{ $price }}</strong></p>
                     <h1 class="mb-4"></h1>
                     <p><a href="{{ route('home') }}" class="btn btn-primary">Go Home</a> </p>
                 </div>

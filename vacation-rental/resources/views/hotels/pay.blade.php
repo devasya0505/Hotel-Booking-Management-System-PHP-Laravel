@@ -35,7 +35,22 @@
 
         {{-- original --}}
         <script>
-            
+            // function clearPayPalSession() {
+            //     // Clear all cookies for PayPal domains
+            //     const domains = ['.paypal.com', '.sandbox.paypal.com'];
+            //     domains.forEach(domain => {
+            //         document.cookie.split(";").forEach(function(c) {
+            //             document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date()
+            //                 .toUTCString() + ";path=/;domain=" + domain);
+            //         });
+            //     });
+
+            //     // Clear storage
+            //     localStorage.clear();
+            //     sessionStorage.clear();
+            //     alert('Session cleared! You can now test with a fresh login.');
+            // }
+
 
             paypal.Buttons({
                 createOrder: (data, actions) => {
