@@ -5,10 +5,10 @@ use App\Http\Controllers\Hotels\HotelsController;
 
 Route::get('/', function () {
     return view('welcome');
-})-> name('home');
+})->name('home');
 
 // Test route - remove this later
-Route::get('/test', function() {
+Route::get('/test', function () {
     return 'Laravel is working!';
 });
 
@@ -20,6 +20,7 @@ Route::get('/test', function() {
 // Auth::routes(); // Uncomment if using laravel/ui package
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 if (class_exists(\Illuminate\Support\Facades\Auth::class) && method_exists(Auth::class, 'routes')) {
     Auth::routes();
@@ -34,7 +35,12 @@ Route::get('hotels/rooms-details/{id}', [App\Http\Controllers\Hotels\HotelsContr
 
 Route::post('hotels/rooms-booking/{id}', [App\Http\Controllers\Hotels\HotelsController::class, 'roomsBooking'])->name('hotel.rooms.booking');
 
-//pay
-Route::get('hotels/pay', [App\Http\Controllers\Hotels\HotelsController::class, 'payWithPayPal'])->name('hotel.pay');
+// // //pay
+// Route::get('hotels/pay', [App\Http\Controllers\Hotels\HotelsController::class, 'payWithPayPal'])->name('hotel.pay');
 
-Route::get('hotels/success', [App\Http\Controllers\Hotels\HotelsController::class, 'success'])->name('hotel.success');
+// Route::get('hotels/success', [App\Http\Controllers\Hotels\HotelsController::class, 'success'])->name('hotel.success');
+
+
+// No middleware needed - validation is in controller
+Route::get('/hotels/pay', [HotelsController::class, 'payWithPayPal'])->name('hotel.pay');
+Route::get('/hotels/success', [HotelsController::class, 'success'])->name('hotel.success');

@@ -147,12 +147,29 @@ class HotelsController extends Controller
 
     public function payWithPayPal()
     {
+        // Check if user can access this page
+        if (!session()->has('price')) {
+            return redirect()->route('home')->with('error', 'Please complete the booking process first.');
+        }
         return view('hotels.pay');
     }
 
     public function success()
     {
-        Session::forget('price');
-        return view('hotels.success');
+        // Check if user can access this page
+        if (!session()->has('price')) {
+            return redirect()->route('home')->with('error', 'Please complete the booking process first.');
+        }
+
+        // Session::forget('price');
+        // return view('hotels.success');
+
+        // Get price before clearing session
+        $price = session('price');
+
+        // Clear session after payment success
+        session()->forget('price');
+
+        return view('hotels.success', compact('price'));
     }
 }
