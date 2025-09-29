@@ -130,7 +130,11 @@
                             <!-- Submit Button -->
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="submit" value="Book and Pay Now" class="btn btn-primary py-3 px-4">
+                                    @if (isset(Auth::user()->id))
+                                        <input type="submit" value="Book and Pay Now" class="btn btn-primary py-3 px-4">
+                                    @else
+                                        <p class="alert alert-success">PLease Login to book a room</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
