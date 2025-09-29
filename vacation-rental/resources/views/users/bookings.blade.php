@@ -45,7 +45,7 @@
                         <td>{{ $booking->price }}</td>
                         <td>{{ $booking->room_name }}</td>
                         <td>{{ $booking->hotel_name }}</td>
-                        <td style="color: green">{{ $booking->status }}</td>
+                        <th style="color: green">{{ $booking->status }}</th>
                     </tr>
                 @endforeach
 
