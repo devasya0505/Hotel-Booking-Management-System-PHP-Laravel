@@ -44,3 +44,6 @@ Route::post('hotels/rooms-booking/{id}', [App\Http\Controllers\Hotels\HotelsCont
 // No middleware needed - validation is in controller
 Route::get('/hotels/pay', [HotelsController::class, 'payWithPayPal'])->name('hotel.pay');
 Route::get('/hotels/success', [HotelsController::class, 'success'])->name('hotel.success');
+
+//users
+Route::get('users/my-bookings', [App\Http\Controllers\Users\UsersController::class, 'myBookings'])->name('users.bookings');
