@@ -35,4 +35,7 @@ class HomeController extends Controller
         return view('pages.about');
     }
     
+    public function services(){
+        return view('pages.services');
+    }
 }
