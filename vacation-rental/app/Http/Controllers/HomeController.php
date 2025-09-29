@@ -30,4 +30,9 @@ class HomeController extends Controller
         
         return view('home', compact('hotels', 'rooms'));
     }
+
+    public function about(){
+        return view('pages.about');
+    }
+    
 }
