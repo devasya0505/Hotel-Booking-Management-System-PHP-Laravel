@@ -58,7 +58,8 @@ Route::get('users/my-bookings', [App\Http\Controllers\Users\UsersController::cla
 
 
 //admin
-Route::get('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'viewLogin'])->name('view.login');
+Route::get('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'viewLogin'])->name('view.login')->middleware(\App\Http\Middleware\CheckForLogin::class);
+
 Route::post('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'checkLogin'])->name('check.login');
 
 
