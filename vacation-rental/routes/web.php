@@ -63,3 +63,5 @@ Route::post('admin/login', [App\Http\Controllers\Admins\AdminsController::class,
 
 
 Route::get('admin/index', [App\Http\Controllers\Admins\AdminsController::class, 'index'])->name('admins.dashboard');
+
+Route::post('admin/logout', [App\Http\Controllers\Admins\AdminsController::class, 'logout'])->name('admin.logout');

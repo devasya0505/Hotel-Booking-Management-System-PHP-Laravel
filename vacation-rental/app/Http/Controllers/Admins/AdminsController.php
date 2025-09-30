@@ -26,4 +26,10 @@ class AdminsController extends Controller
     {
         return view('admins.index');
     }
+
+    public function logout()
+{
+    auth()->guard('admin')->logout();
+    return redirect()->route('index'); // or whatever your main home route is
+}
 }
