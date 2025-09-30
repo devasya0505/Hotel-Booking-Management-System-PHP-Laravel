@@ -6,8 +6,9 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mt-5">Login</h5>
-                    <form method="POST" class="p-auto" action="login.php">
+                    <form method="POST" class="p-auto" action="{{ route('check.login') }}">
                         <!-- Email input -->
+                        @csrf
                         <div class="form-outline mb-4">
                             <input type="email" name="email" id="form2Example1" class="form-control"
                                 placeholder="Email" />
