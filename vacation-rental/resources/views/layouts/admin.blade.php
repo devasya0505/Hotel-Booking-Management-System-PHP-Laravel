@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="utf-8">
-    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
     <title>Admin Panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -54,38 +53,38 @@
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link  dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ Auth::guard('admin')->user()->name }}
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">Logout</a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <!-- FIX: Changed to admin.logout route -->
+                                    <a class="dropdown-item" href="{{ route('admin.logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Logout
+                                    </a>
+                                    <!-- FIX: Added proper form for admin logout -->
+                                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
+                                        class="d-none">
                                         @csrf
                                     </form>
+                                </div>
                             </li>
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('view.login') }}">login
-                                </a>
+                                <a class="nav-link" href="{{ route('view.login') }}">Login</a>
                             </li>
                         @endauth
-
-
                     </ul>
                 </div>
             </div>
         </nav>
-        <div class="container-fluid">
+        <div class="container-fluid" style="margin-top: 80px;">
             <main class="py-4">
                 @yield('content')
             </main>
-
         </div>
     </div>
-    <script type="text/javascript"></script>
 </body>
 
 </html>
