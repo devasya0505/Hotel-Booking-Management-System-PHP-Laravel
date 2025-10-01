@@ -121,4 +121,30 @@ class AdminsController extends Controller
             return Redirect::route('hotels.all')->with(['success' => 'Hotel Created Successfully']);
         }
     }
+
+    public function editHotels($id)
+    {
+
+        $hotel = Hotel::find($id);
+
+        return view('admins.edithotels', compact('hotel'));
+    }
+
+    public function updateHotels(Request $request, $id)
+    {
+        Request()->validate([
+            "name" => "required|max:40",
+            "description" => "required",
+            "location" => "required|max:40",
+        ]);
+
+        $hotel = Hotel::find($id);
+
+        $hotel->update($request->all());
+
+
+        if ($hotel) {
+            return Redirect::route('hotels.all')->with(['update' => 'Hotel Updated Successfully']);
+        }
+    }
 }

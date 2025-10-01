@@ -25,6 +25,20 @@
                             </div>
                         </div>
                     @endif
+                    @if (session()->has('update'))
+                        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert" id="successAlert">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="font-weight-bold">{{ session()->get('update') }}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="progress mt-2" style="height: 4px; background-color: #e9ecef;">
+                                <div class="progress-bar bg-success" id="countdownBar"
+                                    style="width: 100%; transition: width 0.1s linear;"></div>
+                            </div>
+                        </div>
+                    @endif
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="card-title mb-0 font-weight-bold text-dark">All Hotels</h5>
@@ -61,7 +75,7 @@
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            <a href="update-category.html" class="btn btn-warning btn-sm">
+                                            <a href="{{ route('hotels.edit', $hotel->id) }}" class="btn btn-warning btn-sm">
                                                 <i class="fas fa-edit mr-1"></i>Update
                                             </a>
                                         </td>
@@ -122,6 +136,15 @@
                     }, 300);
                 });
             }
+            // // Setup countdown for success alert (hotel created)
+            // const successAlert = document.getElementById('successAlert');
+            // const countdownBar = document.getElementById('countdownBar');
+            // setupCountdown(successAlert, countdownBar);
+
+            // // Setup countdown for update alert (hotel updated)
+            // const updateAlert = document.getElementById('updateAlert');
+            // const countdownBarUpdate = document.getElementById('countdownBarUpdate');
+            // setupCountdown(updateAlert, countdownBarUpdate);
         });
     </script>
 
