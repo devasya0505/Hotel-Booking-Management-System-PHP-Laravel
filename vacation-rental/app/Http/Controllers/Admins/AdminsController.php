@@ -54,25 +54,34 @@ class AdminsController extends Controller
     }
 
     public function storeAdmins(Request $request)
-{
-    // Validate the request
-    // $request->validate([
-    //     'name' => 'required|string|max:255',
-    //     'email' => 'required|email|unique:admins,email',
-    //     'password' => 'required|min:6'
-    // ]);
+    {
+        // Validate the request
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|email|unique:admins,email',
+        //     'password' => 'required|min:6'
+        // ]);
 
-    // Create the admin
-    $admin = Admin::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => bcrypt($request->password) // Hash the password
-    ]);
+        // Create the admin
+        $admin = Admin::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password) // Hash the password
+        ]);
 
-    if($admin) {
-        return redirect()->route('admins.all')->with('success', 'Admin created successfully!');
+        if ($admin) {
+            return redirect()->route('admins.all')->with('success', 'Admin created successfully!');
+        }
+
+        return back()->with('error', 'Failed to create admin');
     }
 
-    return back()->with('error', 'Failed to create admin');
-}
+    public function allHotels()
+    {
+
+
+        $hotels = Hotel::select()->orderBy('id', 'desc')->get();
+
+        return view('admins.allhotels', compact('hotels'));
+    }
 }
