@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Admin\Admin;
 use App\Models\Hotel\Hotel;
 use App\Models\Apartment\Apartment;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminsController extends Controller
 {
@@ -78,10 +79,46 @@ class AdminsController extends Controller
 
     public function allHotels()
     {
-
-
         $hotels = Hotel::select()->orderBy('id', 'desc')->get();
 
         return view('admins.allhotels', compact('hotels'));
+    }
+
+    public function createHotels()
+    {
+        return view('admins.createhotels');
+    }
+
+
+    public function storeHotels(Request $request)
+    {
+
+
+
+        Request()->validate([
+            "name" => "required|max:40",
+            "image" => "required|max:888",
+            "description" => "required",
+            "location" => "required|max:40",
+        ]);
+
+        $destinationPath = 'assets/images/';
+        $myimage = $request->image->getClientOriginalName();
+        $request->image->move(public_path($destinationPath), $myimage);
+
+
+        $storeHotels = Hotel::create([
+
+            "name" => $request->name,
+            "image" => $myimage,
+            "description" => $request->description,
+            "location" => $request->location,
+
+        ]);
+
+        if ($storeHotels) {
+
+            return Redirect::route('hotels.all')->with(['success' => 'Hotel Created Successfully']);
+        }
     }
 }

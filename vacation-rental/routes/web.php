@@ -33,24 +33,24 @@ Route::get('/services', [App\Http\Controllers\HomeController::class, 'services']
 Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])->name('contact');
 
 
-    Route::group(['prefix'=> 'hotels'], function() {
-        //hotels
-        Route::get('/rooms/{id}', [App\Http\Controllers\Hotels\HotelsController::class, 'rooms'])->name('hotel.rooms');
+Route::group(['prefix' => 'hotels'], function () {
+    //hotels
+    Route::get('/rooms/{id}', [App\Http\Controllers\Hotels\HotelsController::class, 'rooms'])->name('hotel.rooms');
 
-        Route::get('/rooms-details/{id}', [App\Http\Controllers\Hotels\HotelsController::class, 'roomsDetails'])->name('hotel.rooms.details');
+    Route::get('/rooms-details/{id}', [App\Http\Controllers\Hotels\HotelsController::class, 'roomsDetails'])->name('hotel.rooms.details');
 
-        Route::post('/rooms-booking/{id}', [App\Http\Controllers\Hotels\HotelsController::class, 'roomsBooking'])->name('hotel.rooms.booking');
+    Route::post('/rooms-booking/{id}', [App\Http\Controllers\Hotels\HotelsController::class, 'roomsBooking'])->name('hotel.rooms.booking');
 
-        // // //pay
-        // Route::get('hotels/pay', [App\Http\Controllers\Hotels\HotelsController::class, 'payWithPayPal'])->name('hotel.pay');
+    // // //pay
+    // Route::get('hotels/pay', [App\Http\Controllers\Hotels\HotelsController::class, 'payWithPayPal'])->name('hotel.pay');
 
-        // Route::get('hotels/success', [App\Http\Controllers\Hotels\HotelsController::class, 'success'])->name('hotel.success');
+    // Route::get('hotels/success', [App\Http\Controllers\Hotels\HotelsController::class, 'success'])->name('hotel.success');
 
 
-        // No middleware needed - validation is in controller
-        Route::get('/pay', [HotelsController::class, 'payWithPayPal'])->name('hotel.pay');
-        Route::get('/success', [HotelsController::class, 'success'])->name('hotel.success');
-    });
+    // No middleware needed - validation is in controller
+    Route::get('/pay', [HotelsController::class, 'payWithPayPal'])->name('hotel.pay');
+    Route::get('/success', [HotelsController::class, 'success'])->name('hotel.success');
+});
 
 
 //users
@@ -63,7 +63,7 @@ Route::get('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 
 Route::post('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'checkLogin'])->name('check.login');
 
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function() {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
     Route::get('/index', [App\Http\Controllers\Admins\AdminsController::class, 'index'])->name('admins.dashboard');
 
@@ -78,7 +78,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function() {
 
 
     //hotels
-      Route::get('/all-hotels', [App\Http\Controllers\Admins\AdminsController::class, 'allHotels'])->name('hotels.all');
+    Route::get('/all-hotels', [App\Http\Controllers\Admins\AdminsController::class, 'allHotels'])->name('hotels.all');
 
+    Route::get('/create-hotels', [App\Http\Controllers\Admins\AdminsController::class, 'createHotels'])->name('hotels.create');
 
+    Route::post('/create-hotels', [App\Http\Controllers\Admins\AdminsController::class, 'storeHotels'])->name('hotels.store');
 });
