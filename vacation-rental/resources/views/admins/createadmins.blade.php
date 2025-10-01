@@ -10,7 +10,8 @@
                     </h5>
                 </div>
                 <div class="card-body p-4">
-                    <form method="POST" action="" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('admins.store') }}" enctype="multipart/form-data">
+                        @csrf
                         <!-- Email input -->
                         <div class="form-group mb-4">
                             <label for="email" class="form-label font-weight-bold">Email Address</label>
@@ -21,7 +22,7 @@
                         <!-- Username input -->
                         <div class="form-group mb-4">
                             <label for="username" class="form-label font-weight-bold">Username</label>
-                            <input type="text" name="username" id="username" class="form-control form-control-lg"
+                            <input type="text" name="name" id="username" class="form-control form-control-lg"
                                 placeholder="Enter username" required />
                         </div>
 

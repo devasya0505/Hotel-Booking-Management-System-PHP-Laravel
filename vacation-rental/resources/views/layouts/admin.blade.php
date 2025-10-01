@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div id="wrapper">
+    <div id="wrapper" style="margin: -110px 0px 0px 0px">
         <nav class="navbar header-top fixed-top navbar-expand-lg  navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="#">LOGO</a>
