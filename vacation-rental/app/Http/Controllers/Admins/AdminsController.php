@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Admin\Admin;
 use App\Models\Hotel\Hotel;
 use App\Models\Apartment\Apartment;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
 
 class AdminsController extends Controller
 {
@@ -53,17 +51,5 @@ class AdminsController extends Controller
     {
 
         return view('admins.createadmins');
-    }
-    public function storeAdmins(Request $request)
-    {
-        $storeAdmins = Admin::create([
-            "name"=>$request->name,
-            "email"=>$request->email,
-            'password' => Hash::make($request->passwordl)
-        ]);
-        
-        if($storeAdmins){
-            return Redirect::route('admins.all')->with(['success'=> 'Admin Created Successfully']);
-        }
     }
 }
