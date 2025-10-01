@@ -115,7 +115,7 @@
                                             <button type="button" class="btn btn-danger btn-sm delete-btn"
                                                 data-booking-id="{{ $booking->id }}"
                                                 data-guest-name="{{ $booking->name }}"
-                                                data-hotel-name="{{ $booking->hotel_name }}">
+                                                data-hotel-name="{{ $booking->hotel_name }}"> 
                                                 <i class="fas fa-trash mr-1"></i>Delete
                                             </button>
                                         </td>

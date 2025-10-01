@@ -279,4 +279,18 @@ class AdminsController extends Controller
             return Redirect::route('bookings.all')->with(['update' => 'Status Updated Successfully']);
         }
     }
+
+    public function deleteBookings($id)
+    {
+
+        $booking = Booking::find($id);
+
+        $booking->delete();
+
+
+        if ($booking) {
+
+            return Redirect::route('bookings.all')->with(['delete' => '❌ Booking Deleted Successfully']);
+        }
+    }
 }
