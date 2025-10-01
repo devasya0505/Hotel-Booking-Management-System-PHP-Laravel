@@ -26,7 +26,7 @@
                         </div>
                     @endif
                     @if (session()->has('update'))
-                        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert" id="successAlert">
+                        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert" id="updateAlert">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="font-weight-bold">{{ session()->get('update') }}</span>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -34,7 +34,21 @@
                                 </button>
                             </div>
                             <div class="progress mt-2" style="height: 4px; background-color: #e9ecef;">
-                                <div class="progress-bar bg-success" id="countdownBar"
+                                <div class="progress-bar bg-success" id="countdownBarUpdate"
+                                    style="width: 100%; transition: width 0.1s linear;"></div>
+                            </div>
+                        </div>
+                    @endif
+                    @if (session()->has('delete'))
+                        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert" id="deleteAlert">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="font-weight-bold">{{ session()->get('delete') }}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="progress mt-2" style="height: 4px; background-color: #e9ecef;">
+                                <div class="progress-bar bg-success" id="countdownBarDelete"
                                     style="width: 100%; transition: width 0.1s linear;"></div>
                             </div>
                         </div>
@@ -80,9 +94,10 @@
                                             </a>
                                         </td>
                                         <td class="text-center">
-                                            <a href="delete-category.html" class="btn btn-danger btn-sm">
+                                            <button type="button" class="btn btn-danger btn-sm delete-btn"
+                                                data-hotel-id="{{ $hotel->id }}" data-hotel-name="{{ $hotel->name }}">
                                                 <i class="fas fa-trash mr-1"></i>Delete
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -103,48 +118,109 @@
         </div>
     </div>
 
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title font-weight-bold" id="deleteModalLabel">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>Confirm Deletion
+                    </h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete hotel "<strong id="hotelName"></strong>"?</p>
+                    <p class="text-danger mb-0">
+                        <i class="fas fa-info-circle mr-1"></i>This action cannot be undone.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fas fa-times mr-1"></i>Cancel
+                    </button>
+                    <form id="deleteForm" method="POST" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash mr-1"></i>Yes, Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Function to handle countdown for any alert
+            function setupCountdown(alertElement, barElement) {
+                if (alertElement && barElement) {
+                    let width = 100;
+                    const duration = 4000; // 4 seconds
+                    const intervalTime = 50; // Update every 50ms
+                    const decrement = (intervalTime / duration) * 100;
+
+                    const countdownInterval = setInterval(() => {
+                        width -= decrement;
+                        barElement.style.width = width + '%';
+
+                        if (width <= 0) {
+                            clearInterval(countdownInterval);
+                            alertElement.style.opacity = '0';
+                            setTimeout(() => {
+                                alertElement.remove();
+                            }, 300);
+                        }
+                    }, intervalTime);
+
+                    // Also allow manual close
+                    alertElement.querySelector('.close').addEventListener('click', function() {
+                        clearInterval(countdownInterval);
+                        alertElement.style.opacity = '0';
+                        setTimeout(() => {
+                            alertElement.remove();
+                        }, 300);
+                    });
+                }
+            }
+
+            // Setup countdown for all alerts
             const successAlert = document.getElementById('successAlert');
             const countdownBar = document.getElementById('countdownBar');
+            setupCountdown(successAlert, countdownBar);
 
-            if (successAlert && countdownBar) {
-                let width = 100;
-                const duration = 4000; // 4 seconds
-                const intervalTime = 50; // Update every 50ms
-                const decrement = (intervalTime / duration) * 100;
+            const updateAlert = document.getElementById('updateAlert');
+            const countdownBarUpdate = document.getElementById('countdownBarUpdate');
+            setupCountdown(updateAlert, countdownBarUpdate);
 
-                const countdownInterval = setInterval(() => {
-                    width -= decrement;
-                    countdownBar.style.width = width + '%';
+            const deleteAlert = document.getElementById('deleteAlert');
+            const countdownBarDelete = document.getElementById('countdownBarDelete');
+            setupCountdown(deleteAlert, countdownBarDelete);
 
-                    if (width <= 0) {
-                        clearInterval(countdownInterval);
-                        successAlert.style.opacity = '0';
-                        setTimeout(() => {
-                            successAlert.remove();
-                        }, 300);
-                    }
-                }, intervalTime);
+            // Delete Confirmation Modal - FIXED
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+            const deleteModal = document.getElementById('deleteModal');
+            const hotelNameElement = document.getElementById('hotelName');
+            const deleteForm = document.getElementById('deleteForm');
 
-                // Also allow manual close
-                successAlert.querySelector('.close').addEventListener('click', function() {
-                    clearInterval(countdownInterval);
-                    successAlert.style.opacity = '0';
-                    setTimeout(() => {
-                        successAlert.remove();
-                    }, 300);
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const hotelId = this.getAttribute('data-hotel-id');
+                    const hotelName = this.getAttribute('data-hotel-name');
+
+                    // Set hotel name in modal
+                    hotelNameElement.textContent = hotelName;
+
+                    // FIXED: Set form action correctly
+                     deleteForm.action = `/admin/delete-hotels/${hotelId}`;
+
+                    // Show modal
+                    $(deleteModal).modal('show');
                 });
-            }
-            // // Setup countdown for success alert (hotel created)
-            // const successAlert = document.getElementById('successAlert');
-            // const countdownBar = document.getElementById('countdownBar');
-            // setupCountdown(successAlert, countdownBar);
-
-            // // Setup countdown for update alert (hotel updated)
-            // const updateAlert = document.getElementById('updateAlert');
-            // const countdownBarUpdate = document.getElementById('countdownBarUpdate');
-            // setupCountdown(updateAlert, countdownBarUpdate);
+            });
         });
     </script>
 
@@ -156,6 +232,14 @@
 
         .progress-bar {
             border-radius: 2px;
+        }
+
+        .delete-btn {
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            transform: scale(1.05);
         }
     </style>
 @endsection

@@ -8,6 +8,7 @@ use App\Models\Admin\Admin;
 use App\Models\Hotel\Hotel;
 use App\Models\Apartment\Apartment;
 use Illuminate\Support\Facades\Redirect;
+use File;
 
 class AdminsController extends Controller
 {
@@ -145,6 +146,28 @@ class AdminsController extends Controller
 
         if ($hotel) {
             return Redirect::route('hotels.all')->with(['update' => 'Hotel Updated Successfully']);
+        }
+    }
+
+    public function deleteHotels($id)
+    {
+
+        $hotel = Hotel::find($id);
+
+
+        if (File::exists(public_path('assets/images/' . $hotel->image))) {
+            File::delete(public_path('assets/images/' . $hotel->image));
+        } else {
+            //dd('File does not exists.');
+        }
+
+        $hotel->delete();
+
+
+        if ($hotel) {
+
+            // return Redirect::route('hotels.all')->with(['delete' => '❌ Hotel Deleted Successfully']);
+            return redirect()->route('hotels.all')->with('delete', '❌ Hotel Deleted Successfully!');
         }
     }
 }
