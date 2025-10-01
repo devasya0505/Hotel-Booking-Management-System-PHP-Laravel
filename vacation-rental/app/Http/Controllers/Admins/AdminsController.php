@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admins;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Admin\Admin;
+use App\Models\Hotel\Hotel;
+use App\Models\Apartment\Apartment;
 
 class AdminsController extends Controller
 {
@@ -24,7 +27,13 @@ class AdminsController extends Controller
     }
     public function index()
     {
-        return view('admins.index');
+
+
+        $adminsCount = Admin::select()->count();
+        $hotelsCount = Hotel::select()->count();
+        $roomsCount = Apartment::select()->count();
+
+        return view('admins.index', compact('adminsCount', 'hotelsCount', 'roomsCount'));
     }
 
     public function logout()
