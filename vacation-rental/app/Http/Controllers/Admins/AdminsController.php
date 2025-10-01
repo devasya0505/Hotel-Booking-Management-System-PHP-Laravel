@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\Admin;
 use App\Models\Hotel\Hotel;
+use App\Models\Booking\Booking;
 use App\Models\Apartment\Apartment;
 use Illuminate\Support\Facades\Redirect;
 use File;
@@ -187,9 +188,6 @@ class AdminsController extends Controller
 
     public function storeRooms(Request $request)
     {
-
-
-
         // Request()->validate([
         //     "name" => "required|max:40",
         //     "image" => "required|max:888",
@@ -221,23 +219,64 @@ class AdminsController extends Controller
         }
     }
 
-    public function deleteRooms($id) {
+    public function deleteRooms($id)
+    {
 
         $room = Apartment::find($id);
 
 
-        if(File::exists(public_path('assets/images/' . $room->image))){
+        if (File::exists(public_path('assets/images/' . $room->image))) {
             File::delete(public_path('assets/images/' . $room->image));
-        }else{
+        } else {
             //dd('File does not exists.');
         }
 
         $room->delete();
 
- 
-        if($room) {
+
+        if ($room) {
 
             return Redirect::route('rooms.all')->with(['delete' => '❌ Room Deleted Successfully']);
+        }
+    }
+
+    public function allBookings()
+    {
+
+
+        $bookings = Booking::select()->orderBy('id', 'desc')->get();
+
+        return view('admins.allbookings', compact('bookings'));
+    }
+
+    public function editStatus($id)
+    {
+
+        $booking = Booking::find($id);
+
+
+        return view('admins.editstatus', compact('booking'));
+    }
+
+
+    public function updateStatus(Request $request, $id)
+    {
+
+
+        // Request()->validate([
+        //     "name" => "required|max:40",
+        //     "description" => "required",
+        //     "location" => "required|max:40",
+        // ]);
+
+        $status = Booking::find($id);
+
+        $status->update($request->all());
+
+
+        if ($status) {
+
+            return Redirect::route('bookings.all')->with(['update' => 'Status Updated Successfully']);
         }
     }
 }
