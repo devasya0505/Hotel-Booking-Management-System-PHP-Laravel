@@ -25,10 +25,13 @@ class AdminsController extends Controller
         }
         return redirect()->back()->with(['error' => 'error logging in']);
     }
+    public function logout()
+    {
+        auth()->guard('admin')->logout();
+        return redirect()->route('index'); // or whatever your main home route is
+    }
     public function index()
     {
-
-
         $adminsCount = Admin::select()->count();
         $hotelsCount = Hotel::select()->count();
         $roomsCount = Apartment::select()->count();
@@ -36,9 +39,17 @@ class AdminsController extends Controller
         return view('admins.index', compact('adminsCount', 'hotelsCount', 'roomsCount'));
     }
 
-    public function logout()
-{
-    auth()->guard('admin')->logout();
-    return redirect()->route('index'); // or whatever your main home route is
-}
+
+    public function allAdmins()
+    {
+        $admins = Admin::select()->orderBy('id', 'desc')->get();
+
+        return view('admins.alladmins', compact('admins'));
+    }
+
+    public function createAdmins()
+    {
+
+        return view('admins.createadmins');
+    }
 }
