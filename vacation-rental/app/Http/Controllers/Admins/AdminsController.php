@@ -221,5 +221,23 @@ class AdminsController extends Controller
         }
     }
 
-    
+    public function deleteRooms($id) {
+
+        $room = Apartment::find($id);
+
+
+        if(File::exists(public_path('assets/images/' . $room->image))){
+            File::delete(public_path('assets/images/' . $room->image));
+        }else{
+            //dd('File does not exists.');
+        }
+
+        $room->delete();
+
+ 
+        if($room) {
+
+            return Redirect::route('rooms.all')->with(['delete' => '❌ Room Deleted Successfully']);
+        }
+    }
 }
