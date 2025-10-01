@@ -5,10 +5,12 @@
         style="margin-top: -25px; background-image: url('{{ asset('assets/images/room-1.jpg') }}');">
         <div class="overlay"></div>
         <div class="container">
+            
             <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start"
                 data-scrollax-parent="true">
                 <div class="col-md-7 ftco-animate">
                     <h1 class="mb-4">Booked Successfully</h1>
+                    <p><strong>Thank you for your booking. You have been logged out for security.</strong></p>
                     <p><strong>Amount Paid: ${{ $price }}</strong></p>
                     <h1 class="mb-4"></h1>
                     <p><a href="{{ route('home') }}" class="btn btn-primary">Go Home</a> </p>

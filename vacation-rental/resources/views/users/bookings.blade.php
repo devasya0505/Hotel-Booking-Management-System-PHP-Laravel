@@ -9,8 +9,6 @@
                 data-scrollax-parent="true">
                 <div class="col-md-12 ftco-animate">
                     <h1 style="margin-left: 200px" class="subheading">My Bookings</h1>
-
-                    {{-- <p><a href="{{ route('home') }}" class="btn btn-primary">Go Home</a></p> --}}
                 </div>
             </div>
         </div>
@@ -33,7 +31,6 @@
                 </tr>
             </thead>
             <tbody>
-
                 @foreach ($bookings as $booking)
                     <tr>
                         <th scope="row">{{ $booking->name }}</th>
@@ -42,13 +39,30 @@
                         <td>{{ $booking->check_in }}</td>
                         <td>{{ $booking->check_out }}</td>
                         <td>{{ $booking->days }}</td>
-                        <td>{{ $booking->price }}</td>
+                        <td>${{ $booking->price }}</td>
                         <td>{{ $booking->room_name }}</td>
                         <td>{{ $booking->hotel_name }}</td>
-                        <th style="color: green">{{ $booking->status }}</th>
+                        <td>
+                            @if($booking->status == 'confirmed' || $booking->status == 'success')
+                                <span class="badge badge-success" style="font-size: 14px; padding: 8px 12px;">
+                                    {{ ucfirst($booking->status) }}
+                                </span>
+                            @elseif($booking->status == 'pending')
+                                <span class="badge badge-warning" style="font-size: 14px; padding: 8px 12px;">
+                                    {{ ucfirst($booking->status) }}
+                                </span>
+                            @elseif($booking->status == 'cancelled')
+                                <span class="badge badge-danger" style="font-size: 14px; padding: 8px 12px;">
+                                    {{ ucfirst($booking->status) }}
+                                </span>
+                            @else
+                                <span class="badge badge-info" style="font-size: 14px; padding: 8px 12px;">
+                                    {{ ucfirst($booking->status) }}
+                                </span>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
-
             </tbody>
         </table>
     </div>

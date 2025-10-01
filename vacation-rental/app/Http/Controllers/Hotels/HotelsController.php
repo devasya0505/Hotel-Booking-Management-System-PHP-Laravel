@@ -137,7 +137,7 @@ class HotelsController extends Controller
             ]);
 
             // Store price in session (make sure this line exists)
-            Session::put('price', number_format($totalPrice, 2));
+            Session::put('price', number_format($totalPrice, 2, '.', ''));
 
             return redirect()->route('hotel.pay')->with('success', 'Room booked successfully!');
         } catch (\Exception $e) {
