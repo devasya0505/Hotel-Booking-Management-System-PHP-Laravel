@@ -12,7 +12,7 @@
             <div class="card-body p-4">
                 <form method="POST" action="{{ route('hotels.update', $hotel->id) }}" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
+                    {{-- @method('POST') --}}
                     
                     <!-- Hotel Name -->
                     <div class="form-group mb-4">
