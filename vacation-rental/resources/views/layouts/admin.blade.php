@@ -36,7 +36,7 @@
                                 <a class="nav-link" href="{{ route('hotels.all') }}" style="margin-left: 20px;">Hotels</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="" style="margin-left: 20px;">Rooms</a>
+                                <a class="nav-link" href="{{ route('rooms.all') }}" style="margin-left: 20px;">Rooms</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="" style="margin-left: 20px;">Bookings</a>

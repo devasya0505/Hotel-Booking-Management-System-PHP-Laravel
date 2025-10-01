@@ -170,4 +170,56 @@ class AdminsController extends Controller
             return redirect()->route('hotels.all')->with('delete', '❌ Hotel Deleted Successfully!');
         }
     }
+
+    public function allRooms()
+    {
+        $rooms = Apartment::select()->orderBy('id', 'desc')->get();
+
+        return view('admins.allrooms', compact('rooms'));
+    }
+
+    public function createRooms()
+    {
+        $hotels = Hotel::all();
+
+        return view('admins.createrooms', compact('hotels'));
+    }
+
+    public function storeRooms(Request $request)
+    {
+
+
+
+        // Request()->validate([
+        //     "name" => "required|max:40",
+        //     "image" => "required|max:888",
+        //     "description" => "required",
+        //     "location" => "required|max:40",
+        // ]);
+
+        $destinationPath = 'assets/images/';
+        $myimage = $request->image->getClientOriginalName();
+        $request->image->move(public_path($destinationPath), $myimage);
+
+
+        $storeRooms = Apartment::create([
+
+            "name" => $request->name,
+            "image" => $myimage,
+            "max_persons" => $request->max_persons,
+            "size" => $request->size,
+            "view" => $request->view,
+            "num_beds" => $request->num_beds,
+            "price" => $request->price,
+            "hotel_id" => $request->hotel_id,
+
+        ]);
+
+        if ($storeRooms) {
+
+            return Redirect::route('rooms.all')->with(['success' => 'Room created successfully']);
+        }
+    }
+
+    
 }
